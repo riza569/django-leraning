@@ -3,19 +3,57 @@ from rest_framework.views import APIView
 from .models import Employee
 from .serializers import EmployeeSerializer
 from rest_framework.response import Response
-from rest_framework import status,mixins,generics 
-
-class Employees(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+from rest_framework import status,mixins,generics ,viewsets
+ 
+class EmployeeViewSet(viewsets.ModelViewSet):
     
     queryset=Employee.objects.all()
     serializer_class=EmployeeSerializer
+    filterset_fields=['designation']
+        
+        
     
-    def get(self,request):
-        return self.list(request)
 
-    def post(self,request):
-        return self.create(request)
+#generics
+# class Employees(generics.ListCreateAPIView):
+#     queryset=Employee.objects.all()
+#     serializer_class=EmployeeSerializer 
+    
+# class EmployeeDetail(generics.RetrieveUpdateDestroyAPIView) :
+#     queryset=Employee.objects.all()
+#     serializer_class=EmployeeSerializer
+#     lookup_field='pk'
+    
 
+#mixins
+# class Employees(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+    
+#     queryset=Employee.objects.all()
+#     serializer_class=EmployeeSerializer
+    
+#     def get(self,request):
+#         return self.list(request)
+
+#     def post(self,request):
+#         return self.create(request)
+
+
+#        #mixins 
+# class EmployeeDetail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin,generics.GenericAPIView):
+#         queryset=Employee.objects.all()
+#         serializer_class=EmployeeSerializer
+        
+#         def get(self,request,pk):
+#             return self.retrieve(request,pk)
+        
+#         def put(self,request,pk):
+#             return self.update(request,pk)
+        
+#         def delete(self,request,pk):
+#             return self.destroy(request,pk)
+        
+        
+    #class based
 # class Employees(APIView):
     
 #     def get(self,request):
@@ -32,25 +70,8 @@ class Employees(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAP
 #         else:
 #             return Response(serializer.errors)
         
-        
-        
-class EmployeeDetail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin,generics.GenericAPIView):
-        queryset=Employee.objects.all()
-        serializer_class=EmployeeSerializer
-        
-        def get(self,request,pk):
-            return self.retrieve(request,pk)
-        
-        def put(self,request,pk):
-            return self.update(request,pk)
-        
-        def delete(self,request,pk):
-            return self.destroy(request,pk)
-        
-        
-        
-        
-        
+
+        #class based
 # class EmployeeDetail(APIView):
     
     
